@@ -7,4 +7,4 @@ endif
 all: gen
 
 gen:
-	perl ./bin/main.pl --input ./example/input/test.xlsx --output ./example/output/test2.xml
+	perl ./bin/main.pl --input ./example/input/test.xlsx --output ./example/output/test.xml
