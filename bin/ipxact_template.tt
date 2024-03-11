@@ -1,37 +1,56 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<spirit:registerFile xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1685-2009">
-    <spirit:name>[% name %]</spirit:name>
-    <spirit:addressOffset>[% addressOffset %]</spirit:addressOffset>
-    <spirit:range>[% range %]</spirit:range>
+<spirit:component xmlns:spirit="http://www.spiritconsortium.org/XMLSchema/SPIRIT/1.5" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <spirit:vendor>componentVendor</spirit:vendor>
+    <spirit:library>componentLibrary</spirit:library>
+    <spirit:name>componentName</spirit:name>
+    <spirit:version>componentVersion</spirit:version>
+    <spirit:memoryMaps>
+      <spirit:memoryMap>
+            <spirit:name>memoryMapName</spirit:name>
+            <spirit:addressBlock>
+                <spirit:name>[% name %]</spirit:name>
+                <spirit:description>addressBlockDescription</spirit:description>
+                <spirit:baseAddress>[% addressOffset %]</spirit:baseAddress>
+                <spirit:range>[% range %]</spirit:range>
+                <spirit:width>addressBlockWidth</spirit:width>
 [% FOREACH register = registers -%]
-    <spirit:register>
-        <spirit:name>[% register.name %]</spirit:name>
-        [%- IF register.desc %]
-        <spirit:description>[% register.desc %]</spirit:description>
-        [%- END %]
-        <spirit:addressOffset>[% register.offset %]</spirit:addressOffset>
-        <spirit:size>[% register.size %]</spirit:size>
-        [%- IF register.access %]
-        <spirit:access>[% register.access %]</spirit:access>
-        [%- END %]
-        [%- IF register.access != 'read-only' %]
-        <spirit:reset>
-            <spirit:value>[% register.reset %]</spirit:value>
-        </spirit:reset>
-        [%- END %]
+                <spirit:register>
+                    <spirit:name>[% register.name %]</spirit:name>
+                    [%- IF register.desc %]
+                    <spirit:description>[% register.desc %]</spirit:description>
+                    [%- END %]
+                    <spirit:addressOffset>[% register.offset %]</spirit:addressOffset>
+                    <spirit:size>[% register.size %]</spirit:size>
+                    [%- IF register.access %]
+                    <spirit:access>[% register.access %]</spirit:access>
+                    [%- END %]
+                    [%- IF register.access != 'read-only' %]
+                    <spirit:reset>
+                        <spirit:value>[% register.reset %]</spirit:value>
+                    </spirit:reset>
+                    [%- END %]
 [% FOREACH field = register.fields -%]
-        <spirit:field>
-            <spirit:name>[% field.name %]</spirit:name>
-            [%- IF field.desc %]
-            <spirit:description>[% field.desc %]</spirit:description>
-            [%- END %]
-            <spirit:bitOffset>[% field.offset %]</spirit:bitOffset>
-            <spirit:bitWidth>[% field.width %]</spirit:bitWidth>
-            [%- IF field.access %]
-            <spirit:access>[% field.access %]</spirit:access>
-            [%- END %]
-        </spirit:field>
+                    <spirit:field>
+                        <spirit:name>[% field.name %]</spirit:name>
+                        [%- IF field.desc %]
+                        <spirit:description>
+                            [%- # Splitting the description string into multiple lines %]
+                            [%- SET desc_lines = field.desc.split("\n") %]
+                            [%- # Using loop to create XML code with "|" symbol for each line %]
+                            [%- FOREACH line IN desc_lines %]
+                                [%- line %][% UNLESS loop.last %]                        | [% END %]
+                            [%- END %]</spirit:description>
+                        [%- END %]
+                        <spirit:bitOffset>[% field.offset %]</spirit:bitOffset>
+                        <spirit:bitWidth>[% field.width %]</spirit:bitWidth>
+                        [%- IF field.access %]
+                        <spirit:access>[% field.access %]</spirit:access>
+                        [%- END %]
+                    </spirit:field>
 [% END -%]
-    </spirit:register>
+                </spirit:register>
 [% END -%]
-</spirit:registerFile>
+            </spirit:addressBlock>
+        </spirit:memoryMap>
+   </spirit:memoryMaps>
+</spirit:component>
