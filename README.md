@@ -10,7 +10,7 @@ perl main.pl --input file.xls --output file.xml
 
 ## Разработка
 
-See https://github.com/paulmMSV/xls2ipxact
+См. https://github.com/paulmMSV/xls2ipxact
 
 
 ## Тестирование
